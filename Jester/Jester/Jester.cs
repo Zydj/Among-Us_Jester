@@ -11,8 +11,7 @@ namespace Jester
     /*
      * TODO:
      *      - Jester tasks not counted towards total tasks    
-     *      - Jester menu options      
-     *      - Playercontrol & HudManager NullPointer  
+     *      - Jester menu options       
      */
 
 
@@ -28,6 +27,7 @@ namespace Jester
 
         public static PlayerControl localPlayer = null;
         public static List<PlayerControl> localPlayers = new List<PlayerControl>();
+        public static bool introDone = false;
 
 
         public static Color jesterColor = new Color(1, (float)(63.0 / 100), (float)(72.0 / 100));

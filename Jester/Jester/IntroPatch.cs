@@ -7,6 +7,8 @@ namespace Jester
     {
         static bool Prefix(IntroCutscene.Nested_0 __instance)
         {
+            Jester.introDone = false;
+
             if (!PlayerController.LocalPlayer.hasComponent("Jester"))
             {
                 return true;
@@ -31,6 +33,8 @@ namespace Jester
                 __instance.__this.ImpostorText.Text = "Get voted off to win";
                 __instance.__this.BackgroundBar.material.color = Jester.jesterColor;
             }
+
+            Jester.introDone = true;
         }
     }
 }

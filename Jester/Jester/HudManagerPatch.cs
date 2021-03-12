@@ -12,7 +12,7 @@ namespace Jester
             if (AmongUsClient.Instance.GameState != InnerNetClient.Nested_0.Started)
                 return;
 
-            if (MeetingHud.Instance != null)
+            if(!Jester.introDone)
             {
                 return;
             }

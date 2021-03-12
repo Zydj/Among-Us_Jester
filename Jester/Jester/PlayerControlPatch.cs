@@ -162,7 +162,12 @@ namespace Jester
             if (__instance == null)
             {
                 return;
-            }            
+            }           
+
+            if (!Jester.introDone)
+            {
+                return;
+            }
 
             if (PlayerController.getLocalPlayer().hasComponent("Jester"))
             {
