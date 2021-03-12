@@ -9,20 +9,26 @@ namespace Jester
         {
             Jester.introDone = false;
 
-            if (!PlayerController.LocalPlayer.hasComponent("Jester"))
+            if (!Jester.jesterEnabled)
             {
                 return true;
             }
 
-            var jesterTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
-            jesterTeam.Add(PlayerControl.LocalPlayer);
-            __instance.yourTeam = jesterTeam;
-
+            if (PlayerController.LocalPlayer.hasComponent("Jester"))
+            {
+                var jesterTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+                jesterTeam.Add(PlayerControl.LocalPlayer);
+                __instance.yourTeam = jesterTeam;
+            }
             return true;
         }
 
         public static void Postfix(IntroCutscene.Nested_0 __instance)
         {
+            if (!Jester.jesterEnabled)
+            {
+                return;
+            }
 
             Jester.jesterWon = false;
 

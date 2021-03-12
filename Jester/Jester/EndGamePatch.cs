@@ -8,6 +8,12 @@ namespace Jester
        
         public static bool Prefix()
         {
+
+            if (!Jester.jesterEnabled)
+            {
+                return true;
+            }
+
             if (TempData.winners.Count <= 1 || !TempData.DidHumansWin(TempData.EndReason))
             {
                 return true;
@@ -35,6 +41,11 @@ namespace Jester
 
         public static void Postfix(EndGameManager __instance)
         {
+            if (!Jester.jesterEnabled)
+            {
+                return;
+            }
+
             if (Jester.jesterWon)
             {
                 Player player = PlayerController.getPlayerById(PlayerControl.LocalPlayer.PlayerId);

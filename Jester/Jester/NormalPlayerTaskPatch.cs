@@ -7,12 +7,15 @@ namespace Jester
     {
         public static void Prefix()
         {
-            if (!PlayerController.LocalPlayer.hasComponent("Jester"))
+            if (!Jester.jesterEnabled)
             {
                 return;
             }
-            
-            Jester.log.LogMessage("Do not update local task bar");
+
+            if (PlayerController.LocalPlayer.hasComponent("Jester"))
+            {
+                Jester.log.LogMessage("Do not update local task bar"); 
+            }            
         }
     }
 }

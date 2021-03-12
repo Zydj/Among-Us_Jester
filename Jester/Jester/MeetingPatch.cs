@@ -10,12 +10,15 @@ namespace Jester
         new[] { typeof(UnityEngine.Object) })]
         static void Prefix(UnityEngine.Object obj)
         {
-            if (ExileController.Instance == null || obj != ExileController.Instance.gameObject)
+            if (!Jester.jesterEnabled)
             {
                 return;
             }
 
-
+            if (ExileController.Instance == null || obj != ExileController.Instance.gameObject)
+            {
+                return;
+            }
 
             if (ExileController.Instance.exiled != null)
             {
@@ -36,7 +39,16 @@ namespace Jester
         [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
         public static void Postfix(MeetingHud __instance)
         {
+            if (!Jester.jesterEnabled)
+            {
+                return;
+            }
+
             PlayerControl jester = PlayerController.getPlayerControlByRole("Jester");            
+            if (jester == null)
+            {
+                return;
+            }
 
             foreach (PlayerVoteArea playerArea in __instance.playerStates)
             {                

@@ -28,6 +28,7 @@ namespace Jester
         public static PlayerControl localPlayer = null;
         public static List<PlayerControl> localPlayers = new List<PlayerControl>();
         public static bool introDone = false;
+        public static bool jesterEnabled = true;
 
 
         public static Color jesterColor = new Color(1, (float)(63.0 / 100), (float)(72.0 / 100));
