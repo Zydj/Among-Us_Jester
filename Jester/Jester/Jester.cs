@@ -10,8 +10,8 @@ namespace Jester
 {
     /*
      * TODO:
-     *      - Jester tasks not counted towards total tasks    
-     *      - Jester menu options       
+     *      - Remove jester tasks from total tasks (Varialbe TotalTasks is in GameData.cs)
+     *      - if jester is voted out on 3 or 5, impostors wins, needs fix  
      */
 
 
@@ -29,6 +29,7 @@ namespace Jester
         public static List<PlayerControl> localPlayers = new List<PlayerControl>();
         public static bool introDone = false;
         public static bool jesterEnabled = true;
+        public static Player lastPlayerTask = null;
 
 
         public static Color jesterColor = new Color(1, (float)(63.0 / 100), (float)(72.0 / 100));
