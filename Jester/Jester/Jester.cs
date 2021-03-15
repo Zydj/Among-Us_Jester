@@ -10,7 +10,6 @@ namespace Jester
 {
     /*
      * TODO:
-     *      - Cleanup Code
      *      - Taskbar has more ticks than actual crewmates
      */
 
