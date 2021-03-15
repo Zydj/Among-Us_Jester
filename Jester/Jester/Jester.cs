@@ -10,12 +10,9 @@ namespace Jester
 {
     /*
      * TODO:
-     *      - if jester is voted out on 3 or 5, impostors wins, needs fix  
      *      - Cleanup Code
      *      - Taskbar has more ticks than actual crewmates
      */
-
-
 
     [BepInPlugin(Id)]
     [BepInProcess("Among Us.exe")]
@@ -32,17 +29,14 @@ namespace Jester
         public static bool jesterEnabled = true;
         public static Player lastPlayerTask = null;
 
-
         public static Color jesterColor = new Color(1, (float)(63.0 / 100), (float)(72.0 / 100));
 
-        public Harmony Harmony { get; } = new Harmony(Id);       
+        public Harmony Harmony { get; } = new Harmony(Id);
 
         public ConfigEntry<string> Name { get; private set; }
 
         public override void Load()
         {
-            Name = Config.Bind("Fake", "Name", ":>");
-
             log = Log;
             log.LogMessage("Jester Mod Loaded");
 

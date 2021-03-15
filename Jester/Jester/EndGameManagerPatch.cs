@@ -2,29 +2,28 @@
 
 namespace Jester
 {
-    [HarmonyPatch(typeof(EndGameManager), "SetEverythingUp")]
-    public static class EndGamePatch
+    [HarmonyPatch]
+    public static class EndGameManagerPatch
     {
-       
-        public static bool Prefix()
+        [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]
+        public static void Prefix()
         {
-
             if (!Jester.jesterEnabled)
             {
-                return true;
+                return;
             }
 
             if (TempData.winners.Count <= 1 || !TempData.DidHumansWin(TempData.EndReason))
             {
-                return true;
+                return;
             }
 
             if (Jester.jesterWon)
             {
                 Jester.log.LogMessage("Clearing winners");
                 TempData.winners.Clear();
-                
-                Player jester = PlayerController.getPlayerByRole("Jester");               
+
+                Player jester = PlayerController.getPlayerByRole("Jester");
 
                 foreach (PlayerControl playerCon in Jester.localPlayers)
                 {
@@ -36,9 +35,8 @@ namespace Jester
                     }
                 }
             }
-                    return true;
         }
-
+        [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]
         public static void Postfix(EndGameManager __instance)
         {
             if (!Jester.jesterEnabled)

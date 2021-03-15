@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using Hazel;
 using UnhollowerBaseLib;
 
 namespace Jester
@@ -10,11 +9,15 @@ namespace Jester
         [HarmonyPatch(typeof(GameData), nameof(GameData.RpcSetTasks))]
         static void Postfix(byte FEFHEFFFBBI, Il2CppStructArray<byte> NMIBFBOGFCJ)
         {
+            if (!Jester.jesterEnabled)
+            {
+                return;
+            }
+
             if (PlayerController.getPlayerById(FEFHEFFFBBI).hasComponent("Jester"))
             {
-                GameData.Instance.GetPlayerById(FEFHEFFFBBI).DEPNCDAJFGJ= null;
-                
-            }           
-        }        
+                GameData.Instance.GetPlayerById(FEFHEFFFBBI).DEPNCDAJFGJ = null;
+            }
+        }
     }
 }

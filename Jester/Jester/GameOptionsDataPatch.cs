@@ -2,12 +2,11 @@
 
 namespace Jester
 {
-    [HarmonyPatch(typeof(GameOptionsData))]
+    [HarmonyPatch]
     public class GameOptionDataPatch
     {
-        [HarmonyPostfix]
-        [HarmonyPatch("NHJLMAAHKJF")]
-        public static void Postfix1(GameOptionsData __instance, ref string __result, int MKGPLPMAKLO)
+        [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.Method_5))]
+        public static void Postfix(ref string __result)
         {
             if (Jester.jesterEnabled)
             {

@@ -7,21 +7,6 @@ using InnerNet;
 
 namespace Jester
 {
-    enum RPC
-    {
-        CompleteTask = 1
-    }
-    enum CustomRPC
-    {
-
-        SetJester = 40,
-        JesterWin = 50,
-        SetLocalPlayers = 41,
-        SyncCustomSettings = 42,
-        SetLastPlayerTask = 43
-
-    }
-
     [HarmonyPatch]
     public static class PlayerControlPatch
     {
@@ -30,11 +15,9 @@ namespace Jester
             List<Player> Crewmates = new List<Player>();
             foreach (Player player in PlayerController.players)
             {
-
                 bool isInfected = false;
                 foreach (GameData.Nested_1 infected in infection)
                 {
-
                     if (player.playerdata.PlayerId == infected.IBJBIALCEKB.PlayerId)
                     {
                         isInfected = true;
@@ -52,7 +35,7 @@ namespace Jester
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         static void Postfix(byte ACCJCEHMKLN, MessageReader HFPCBBHJIPJ)
-        {            
+        {
             Jester.log.LogMessage("RPC is:" + ACCJCEHMKLN);
             switch (ACCJCEHMKLN)
             {
@@ -61,7 +44,7 @@ namespace Jester
                         Jester.log.LogMessage("Setting Jester");
                         PlayerController.InitPlayers();
                         Player p = PlayerController.getPlayerById(HFPCBBHJIPJ.ReadByte());
-                        p.components.Add("Jester");                        
+                        p.components.Add("Jester");
                         break;
                     }
 
@@ -80,7 +63,6 @@ namespace Jester
                             }
                             else
                             {
-                                Jester.log.LogMessage(playerCon.nameText.Text + " is impostor: " + playerCon.Data.LGEGJEHCFOG);
                                 playerCon.RemoveInfected();
                                 playerCon.Die(DeathReason.Exile);
                                 playerCon.Data.AKOHOAJIHBE = true;
@@ -107,9 +89,9 @@ namespace Jester
                                 }
                             }
                         }
-                        Jester.log.LogMessage(Jester.localPlayer.nameText.Text);                       
+                        Jester.log.LogMessage(Jester.localPlayer.nameText.Text);
                         break;
-                    }               
+                    }
 
                 case (byte)CustomRPC.SyncCustomSettings:
                     {
@@ -123,20 +105,18 @@ namespace Jester
                         Jester.lastPlayerTask = PlayerController.getPlayerById(HFPCBBHJIPJ.ReadByte());
                         break;
                     }
-            }            
+            }
         }
 
-        [HarmonyPatch(typeof(PlayerControl), "CompleteTask")]
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CompleteTask))]
         public static bool Prefix(uint CBAHIKLHCAO, PlayerControl __instance)
         {
             if (!Jester.jesterEnabled)
             {
                 return true;
             }
-            
-            Jester.log.LogMessage(__instance.nameText.Text + " Completed a task");
 
-            
+            Jester.log.LogMessage(__instance.nameText.Text + " Completed a task");
 
             foreach (PlayerTask task in __instance.myTasks)
             {
@@ -161,7 +141,7 @@ namespace Jester
             return false;
         }
 
-        [HarmonyPatch(typeof(PlayerControl), "RpcSetInfected")]
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetInfected))]
         public static void Postfix(Il2CppReferenceArray<GameData.Nested_1> FMAOEJEHPAO)
         {
             if (!Jester.jesterEnabled)
@@ -169,7 +149,7 @@ namespace Jester
                 return;
             }
 
-            PlayerController.InitPlayers();           
+            PlayerController.InitPlayers();
 
             List<Player> crewmates = getCrewMates(FMAOEJEHPAO);
             var jesterid = new System.Random().Next(0, crewmates.Count);
@@ -191,7 +171,6 @@ namespace Jester
             writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetLocalPlayers, Hazel.SendOption.Reliable);
             writer.WriteBytesAndSize(Jester.localPlayers.Select(player => player.PlayerId).ToArray());
             writer.EndMessage();
-
         }
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
@@ -221,7 +200,7 @@ namespace Jester
             }
         }
 
-        [HarmonyPatch(typeof(PlayerControl), "RpcSyncSettings")]
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSyncSettings))]
         public static void Postfix(GameOptionsData OMFKMPLOPPM)
         {
             if (PlayerControl.AllPlayerControls.Count > 1)
@@ -232,6 +211,4 @@ namespace Jester
             }
         }
     }
-
-
 }

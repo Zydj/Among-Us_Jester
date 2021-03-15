@@ -18,7 +18,7 @@ namespace Jester
                 {
                     LocalPlayer = p;
                 }
-                players.Add(p);                
+                players.Add(p);
             }
         }
 
@@ -31,9 +31,9 @@ namespace Jester
                 if (player.PlayerId == id)
                 {
                     return player;
-                }              
+                }
             }
-            
+
             return null;
         }
 

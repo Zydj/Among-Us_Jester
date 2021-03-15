@@ -6,8 +6,7 @@ namespace Jester
     [HarmonyPatch]
     public static class MeetingPatch
     {
-        [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy),
-        new[] { typeof(UnityEngine.Object) })]
+        [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new[] { typeof(UnityEngine.Object) })]
         static void Prefix(UnityEngine.Object obj)
         {
             if (!Jester.jesterEnabled)
@@ -39,7 +38,6 @@ namespace Jester
                         }
                         else
                         {
-                            Jester.log.LogMessage(playerCon.nameText.Text + " is impostor: " + playerCon.Data.LGEGJEHCFOG);
                             playerCon.RemoveInfected();
                             playerCon.Die(DeathReason.Exile);
                             playerCon.Data.AKOHOAJIHBE = true;
@@ -51,7 +49,6 @@ namespace Jester
                     MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.JesterWin, Hazel.SendOption.Reliable);
                     writer.EndMessage();
                 }
-
             }
         }
 
@@ -63,16 +60,16 @@ namespace Jester
                 return;
             }
 
-            PlayerControl jester = PlayerController.getPlayerControlByRole("Jester");            
+            PlayerControl jester = PlayerController.getPlayerControlByRole("Jester");
             if (jester == null)
             {
                 return;
             }
 
             foreach (PlayerVoteArea playerArea in __instance.playerStates)
-            {                
+            {
                 if (jester.nameText.Text.Equals(playerArea.NameText.Text) && PlayerControl.LocalPlayer.PlayerId == jester.PlayerId)
-                {                    
+                {
                     playerArea.NameText.Color = Jester.jesterColor;
                 }
             }

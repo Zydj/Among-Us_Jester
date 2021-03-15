@@ -2,9 +2,10 @@
 
 namespace Jester
 {
-    [HarmonyPatch(typeof(IntroCutscene.Nested_0), "MoveNext")]
-    public static class IntroPatch
+    [HarmonyPatch]
+    public static class IntroCutscenePatch
     {
+        [HarmonyPatch(typeof(IntroCutscene.Nested_0), nameof(IntroCutscene.Nested_0.MoveNext))]
         static bool Prefix(IntroCutscene.Nested_0 __instance)
         {
             Jester.introDone = false;
@@ -23,6 +24,7 @@ namespace Jester
             return true;
         }
 
+        [HarmonyPatch(typeof(IntroCutscene.Nested_0), nameof(IntroCutscene.Nested_0.MoveNext))]
         public static void Postfix(IntroCutscene.Nested_0 __instance)
         {
             if (!Jester.jesterEnabled)
