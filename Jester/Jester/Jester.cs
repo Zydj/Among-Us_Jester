@@ -10,8 +10,9 @@ namespace Jester
 {
     /*
      * TODO:
-     *      - Remove jester tasks from total tasks (Varialbe TotalTasks is in GameData.cs)
      *      - if jester is voted out on 3 or 5, impostors wins, needs fix  
+     *      - Cleanup Code
+     *      - Taskbar has more ticks than actual crewmates
      */
 
 
