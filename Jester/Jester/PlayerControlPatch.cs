@@ -51,7 +51,7 @@ namespace Jester
         }
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
-        static void Prefix(byte ACCJCEHMKLN, MessageReader HFPCBBHJIPJ)
+        static void Postfix(byte ACCJCEHMKLN, MessageReader HFPCBBHJIPJ)
         {            
             Jester.log.LogMessage("RPC is:" + ACCJCEHMKLN);
             switch (ACCJCEHMKLN)
@@ -80,6 +80,7 @@ namespace Jester
                             }
                             else
                             {
+                                Jester.log.LogMessage(playerCon.nameText.Text + " is impostor: " + playerCon.Data.LGEGJEHCFOG);
                                 playerCon.RemoveInfected();
                                 playerCon.Die(DeathReason.Exile);
                                 playerCon.Data.AKOHOAJIHBE = true;

@@ -28,6 +28,25 @@ namespace Jester
 
                 if (player.hasComponent("Jester"))
                 {
+                    Jester.jesterWon = true;
+
+                    foreach (PlayerControl playerCon in PlayerControl.AllPlayerControls)
+                    {
+                        if (playerCon.PlayerId == exiled.PlayerId)
+                        {
+                            playerCon.Data.AKOHOAJIHBE = true;
+                            playerCon.Data.LGEGJEHCFOG = false;
+                        }
+                        else
+                        {
+                            Jester.log.LogMessage(playerCon.nameText.Text + " is impostor: " + playerCon.Data.LGEGJEHCFOG);
+                            playerCon.RemoveInfected();
+                            playerCon.Die(DeathReason.Exile);
+                            playerCon.Data.AKOHOAJIHBE = true;
+                            playerCon.Data.LGEGJEHCFOG = false;
+                        }
+                    }
+
                     Jester.log.LogMessage("Jester Wins");
                     MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.JesterWin, Hazel.SendOption.Reliable);
                     writer.EndMessage();
