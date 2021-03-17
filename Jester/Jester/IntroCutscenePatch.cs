@@ -6,13 +6,13 @@ namespace Jester
     public static class IntroCutscenePatch
     {
         [HarmonyPatch(typeof(IntroCutscene.Nested_0), nameof(IntroCutscene.Nested_0.MoveNext))]
-        static bool Prefix(IntroCutscene.Nested_0 __instance)
+        static void Prefix(IntroCutscene.Nested_0 __instance)
         {
             Jester.introDone = false;
 
             if (!Jester.jesterEnabled)
             {
-                return true;
+                return;
             }
 
             if (PlayerController.LocalPlayer.hasComponent("Jester"))
@@ -20,8 +20,7 @@ namespace Jester
                 var jesterTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
                 jesterTeam.Add(PlayerControl.LocalPlayer);
                 __instance.yourTeam = jesterTeam;
-            }
-            return true;
+            }            
         }
 
         [HarmonyPatch(typeof(IntroCutscene.Nested_0), nameof(IntroCutscene.Nested_0.MoveNext))]
