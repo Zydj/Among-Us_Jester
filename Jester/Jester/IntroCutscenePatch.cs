@@ -18,7 +18,7 @@ namespace Jester
                 var jesterTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
                 jesterTeam.Add(PlayerControl.LocalPlayer);
                 __instance.yourTeam = jesterTeam;
-            }            
+            }
         }
 
         [HarmonyPatch(typeof(IntroCutscene.Nested_0), nameof(IntroCutscene.Nested_0.MoveNext))]
@@ -38,8 +38,6 @@ namespace Jester
                 __instance.__this.ImpostorText.Text = "Get voted off to win";
                 __instance.__this.BackgroundBar.material.color = Jester.jesterColor;
             }
-
-            Jester.introDone = true;
         }
 
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]

@@ -50,7 +50,7 @@ namespace Jester
                             Jester.log.LogMessage("Setting Jester");
                         }
 
-                        Jester.introDone = true;
+                        Jester.introDone = false;
 
                         PlayerController.InitPlayers();
                         Player p = PlayerController.getPlayerById(HFPCBBHJIPJ.ReadByte());
@@ -104,7 +104,7 @@ namespace Jester
                                 }
                             }
                         }
-                        
+
                         break;
                     }
 
@@ -181,7 +181,7 @@ namespace Jester
                 return;
             }
 
-            Jester.introDone = true;
+            Jester.introDone = false;
 
             PlayerController.InitPlayers();
 
