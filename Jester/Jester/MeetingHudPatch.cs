@@ -4,7 +4,7 @@ using Hazel;
 namespace Jester
 {
     [HarmonyPatch]
-    public static class MeetingPatch
+    public static class MeetingHudPatch
     {
         [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new[] { typeof(UnityEngine.Object) })]
         static void Prefix(UnityEngine.Object obj)
@@ -45,7 +45,11 @@ namespace Jester
                         }
                     }
 
-                    Jester.log.LogMessage("Jester Wins");
+                    if (Jester.debug)
+                    {
+                        Jester.log.LogMessage("Jester Wins");
+                    }
+
                     MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.JesterWin, Hazel.SendOption.Reliable);
                     writer.EndMessage();
                 }
