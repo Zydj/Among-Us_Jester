@@ -12,8 +12,8 @@ namespace Jester
     {
         SetJester = 40,
         JesterWin = 50,
-        SetLocalPlayers = 41,
-        SyncCustomSettings = 42,
+        SetLocalPlayersJester = 41,
+        SyncCustomSettingsJester = 42,
         SetLastPlayerTask = 43
     }
 }
