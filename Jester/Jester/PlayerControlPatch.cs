@@ -50,6 +50,8 @@ namespace Jester
                             Jester.log.LogMessage("Setting Jester");
                         }
 
+                        Jester.introDone = true;
+
                         PlayerController.InitPlayers();
                         Player p = PlayerController.getPlayerById(HFPCBBHJIPJ.ReadByte());
                         p.components.Add("Jester");
@@ -179,6 +181,8 @@ namespace Jester
                 return;
             }
 
+            Jester.introDone = true;
+
             PlayerController.InitPlayers();
 
             List<Player> crewmates = getCrewMates(FMAOEJEHPAO);
@@ -227,6 +231,10 @@ namespace Jester
             if (PlayerController.getLocalPlayer().hasComponent("Jester"))
             {
                 PlayerControl.LocalPlayer.nameText.Color = Jester.jesterColor;
+            }
+            else if (!PlayerController.getLocalPlayer().playerdata.Data.LGEGJEHCFOG)
+            {
+                PlayerControl.LocalPlayer.nameText.Color = Palette.White;
             }
         }
 

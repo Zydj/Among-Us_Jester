@@ -8,8 +8,6 @@ namespace Jester
         [HarmonyPatch(typeof(IntroCutscene.Nested_0), nameof(IntroCutscene.Nested_0.MoveNext))]
         static void Prefix(IntroCutscene.Nested_0 __instance)
         {
-            Jester.introDone = false;
-
             if (!Jester.jesterEnabled)
             {
                 return;
@@ -41,6 +39,12 @@ namespace Jester
                 __instance.__this.BackgroundBar.material.color = Jester.jesterColor;
             }
 
+            Jester.introDone = true;
+        }
+
+        [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]
+        public static void Postfix()
+        {
             Jester.introDone = true;
         }
     }
