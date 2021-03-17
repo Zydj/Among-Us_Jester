@@ -20,7 +20,11 @@ namespace Jester
 
             if (Jester.jesterWon)
             {
-                Jester.log.LogMessage("Clearing winners");
+                if (Jester.debug)
+                {
+                    Jester.log.LogMessage("Clearing winners");
+                }
+
                 TempData.winners.Clear();
 
                 Player jester = PlayerController.getPlayerByRole("Jester");
@@ -29,7 +33,10 @@ namespace Jester
                 {
                     if (playerCon.PlayerId == jester.PlayerId)
                     {
-                        Jester.log.LogMessage("Adding winners");
+                        if (Jester.debug)
+                        {
+                            Jester.log.LogMessage("Adding winners");
+                        }
 
                         TempData.winners.Add(new WinningPlayerData(playerCon.Data));
                     }

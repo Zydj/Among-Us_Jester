@@ -36,12 +36,20 @@ namespace Jester
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         static void Postfix(byte ACCJCEHMKLN, MessageReader HFPCBBHJIPJ)
         {
-            Jester.log.LogMessage("RPC is:" + ACCJCEHMKLN);
+            if (Jester.debug)
+            {
+                Jester.log.LogMessage("RPC is:" + ACCJCEHMKLN);
+            }
+
             switch (ACCJCEHMKLN)
             {
                 case (byte)CustomRPC.SetJester:
                     {
-                        Jester.log.LogMessage("Setting Jester");
+                        if (Jester.debug)
+                        {
+                            Jester.log.LogMessage("Setting Jester");
+                        }
+
                         PlayerController.InitPlayers();
                         Player p = PlayerController.getPlayerById(HFPCBBHJIPJ.ReadByte());
                         p.components.Add("Jester");
@@ -51,7 +59,12 @@ namespace Jester
                 case (byte)CustomRPC.JesterWin:
                     {
                         Jester.jesterWon = true;
-                        Jester.log.LogMessage("Handling Jester Victory");
+
+                        if (Jester.debug)
+                        {
+                            Jester.log.LogMessage("Handling Jester Victory");
+                        }
+
                         Player player = PlayerController.getPlayerByRole("Jester");
 
                         foreach (PlayerControl playerCon in PlayerControl.AllPlayerControls)
@@ -72,7 +85,7 @@ namespace Jester
                         break;
                     }
 
-                case (byte)CustomRPC.SetLocalPlayers:
+                case (byte)CustomRPC.SetLocalPlayersJester:
                     {
                         Jester.localPlayers.Clear();
                         Jester.localPlayer = PlayerControl.LocalPlayer;
@@ -89,11 +102,11 @@ namespace Jester
                                 }
                             }
                         }
-                        Jester.log.LogMessage(Jester.localPlayer.nameText.Text);
+                        
                         break;
                     }
 
-                case (byte)CustomRPC.SyncCustomSettings:
+                case (byte)CustomRPC.SyncCustomSettingsJester:
                     {
                         Jester.jesterEnabled = HFPCBBHJIPJ.ReadBoolean();
                         break;
@@ -101,7 +114,11 @@ namespace Jester
 
                 case (byte)CustomRPC.SetLastPlayerTask:
                     {
-                        Jester.log.LogMessage("Setting last player task");
+                        if (Jester.debug)
+                        {
+                            Jester.log.LogMessage("Setting last player task");
+                        }
+
                         Jester.lastPlayerTask = PlayerController.getPlayerById(HFPCBBHJIPJ.ReadByte());
                         break;
                     }
@@ -116,13 +133,20 @@ namespace Jester
                 return true;
             }
 
-            Jester.log.LogMessage(__instance.nameText.Text + " Completed a task");
+            if (Jester.debug)
+            {
+                Jester.log.LogMessage(__instance.nameText.Text + " Completed a task");
+            }
 
             foreach (PlayerTask task in __instance.myTasks)
             {
                 if (task.Id == CBAHIKLHCAO)
                 {
-                    Jester.log.LogMessage("Sending last player task RPC");
+                    if (Jester.debug)
+                    {
+                        Jester.log.LogMessage("Sending last player task RPC");
+                    }
+
                     Jester.lastPlayerTask = PlayerController.getPlayerById(__instance.PlayerId);
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetLastPlayerTask, Hazel.SendOption.Reliable);
                     writer.Write(__instance.PlayerId);
@@ -130,14 +154,20 @@ namespace Jester
                 }
             }
 
-            Jester.log.LogMessage("Checking local taskbar");
+            if (Jester.debug)
+            {
+                Jester.log.LogMessage("Checking local taskbar");
+            }
 
             if (!Jester.lastPlayerTask.hasComponent("Jester"))
             {
                 return true;
             }
 
-            Jester.log.LogMessage("Do not update task bar");
+            if (Jester.debug)
+            {
+                Jester.log.LogMessage("Do not update task bar");
+            }
             return false;
         }
 
@@ -168,7 +198,7 @@ namespace Jester
                 Jester.localPlayers.Add(player);
             }
 
-            writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetLocalPlayers, Hazel.SendOption.Reliable);
+            writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetLocalPlayersJester, Hazel.SendOption.Reliable);
             writer.WriteBytesAndSize(Jester.localPlayers.Select(player => player.PlayerId).ToArray());
             writer.EndMessage();
         }
@@ -205,7 +235,7 @@ namespace Jester
         {
             if (PlayerControl.AllPlayerControls.Count > 1)
             {
-                MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SyncCustomSettings, Hazel.SendOption.Reliable);
+                MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SyncCustomSettingsJester, Hazel.SendOption.Reliable);
                 writer.Write(Jester.jesterEnabled);
                 writer.EndMessage();
             }
