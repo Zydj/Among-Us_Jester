@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using HarmonyLib;
 using UnhollowerBaseLib;
 using UnityEngine;
@@ -39,6 +38,7 @@ namespace Jester
             {
                 GameOptionsMenuPatch.showJesterOption.gameObject.SetActive(true);
             }
+
             GameOptionsMenuPatch.showJesterOption.TitleText.Text = "Jester Role";
             GameOptionsMenuPatch.showJesterOption.oldValue = Jester.jesterEnabled;
             GameOptionsMenuPatch.showJesterOption.CheckMark.enabled = Jester.jesterEnabled;
