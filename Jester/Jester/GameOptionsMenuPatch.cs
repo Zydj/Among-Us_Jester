@@ -1,7 +1,5 @@
 ﻿using HarmonyLib;
 using UnityEngine;
-using System.Linq;
-using UnhollowerBaseLib;
 
 namespace Jester
 {
@@ -18,10 +16,12 @@ namespace Jester
             CustomPlayerMenuPatch.AddOptions();
         }
 
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(GameOptionsMenu), nameof(GameOptionsMenu.Update))]
         public static void Postfix1(GameOptionsMenu __instance)
         {
             OptionBehaviour option = __instance.Children[__instance.Children.Count - 2];
+
             if (showJesterOption != null)
             {
                 showJesterOption.transform.position = option.transform.position - new Vector3(0, 0.5f, 0);
