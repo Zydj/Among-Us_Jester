@@ -8,7 +8,7 @@ namespace Jester
     {
         public static ToggleOption showJesterOption;
         public static GameOptionsMenu instance;
-        
+
         public static OptionBehaviour option;
 
         public static float defaultBounds;
@@ -22,7 +22,7 @@ namespace Jester
 
             option = __instance.Children[__instance.Children.Count - 1];
 
-            CustomPlayerMenuPatch.AddOptions(); 
+            CustomPlayerMenuPatch.AddOptions();
         }
 
         [HarmonyPostfix]
